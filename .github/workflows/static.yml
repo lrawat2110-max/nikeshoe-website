@@ -1,0 +1,129 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="navbar">
+  <!-- Left Logo -->
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike Logo">
+  </div>
+
+  <!-- Center Menu -->
+  <nav class="nav-links">
+    <a href="#">Home</a>
+    <a href="#">Offers</a>
+    <a href="#">Collections</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <!-- Right Section -->
+  <div class="nav-right">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search">
+    </div>
+
+    <div class="icons">
+      <span class="icon">🛍️</span>
+      <span class="icon">☰</span>
+    </div>
+  </div>
+</header>
+
+
+
+<section class="hero">
+
+  <!-- LEFT CONTENT -->
+  <div class="hero-left">
+    <h1>Nike Impact <span>4</span></h1>
+    <h2>$250.90</h2>
+
+    <div class="colors">
+      <p>Colors</p>
+      <span class="dot white"></span>
+      <span class="dot red"></span>
+      <span class="dot green"></span>
+    </div>
+
+    <div class="sizes">
+      <p>Size</p>
+      <button class="active">6</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+    </div>
+
+    <button class="buy-btn">BUY</button>
+  </div>
+
+  <!-- CENTER SHOE -->
+  <div class="hero-center">
+    <img src="shoe-main.png" class="main-shoe" alt="Nike Shoe">
+  </div>
+
+  <!-- RIGHT THUMBNAILS -->
+  <div class="hero-right">
+    <div class="thumb pink">
+      <img src="shoe1.png">
+    </div>
+    <div class="thumb blue">
+      <img src="shoe2.png">
+    </div>
+    <div class="thumb purple">
+      <img src="shoe3.png">
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
